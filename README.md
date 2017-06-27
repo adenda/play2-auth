@@ -1,8 +1,16 @@
-Play2.x module for Authentication and Authorization [![Build Status](https://secure.travis-ci.org/t2v/play2-auth.png)](http://travis-ci.org/t2v/play2-auth)
+Play2.x module for Authentication and Authorization [![Build Status](https://secure.travis-ci.org/t2v/play2-auth.png)](https://travis-ci.org/t2v/play2-auth)
 ===========================================================
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/t2v/play2-auth?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This module offers Authentication and Authorization features to Play2.x applications
+
+Scaladoc
+----------------------------------------
+
+- [![play2-auth scaladoc](http://javadoc-badge.appspot.com/jp.t2v/play2-auth_2.11.svg?label=play2-auth)](http://javadoc-badge.appspot.com/jp.t2v/play2-auth_2.11/index.html#jp.t2v.lab.play2.auth.package)
+- [![play2-auth-social scaladoc](http://javadoc-badge.appspot.com/jp.t2v/play2-auth-social_2.11.svg?label=play2-auth-social)](http://javadoc-badge.appspot.com/jp.t2v/play2-auth-social_2.11/index.html#jp.t2v.lab.play2.auth.social.package)
+- [![play2-auth-test scaladoc](http://javadoc-badge.appspot.com/jp.t2v/play2-auth-test_2.11.svg?label=play2-auth-test)](http://javadoc-badge.appspot.com/jp.t2v/play2-auth-test_2.11/index.html#jp.t2v.lab.play2.auth.test.package)
+
 
 Target
 ----------------------------------------
@@ -481,7 +489,7 @@ object Application extends Controller with TokenValidateElement with AuthElement
 
 ### Asynchronous Support
 
-There are asynchronous libraries ( for example: [ReactiveMongo](http://reactivemongo.org/), [ScalikeJDBC-Async](https://github.com/seratch/scalikejdbc-async), and so on ).
+There are asynchronous libraries ( for example: [ReactiveMongo](http://reactivemongo.org/), [ScalikeJDBC-Async](https://github.com/scalikejdbc/scalikejdbc-async), and so on ).
 
 You should use `Future[Result]` instead of `AsyncResult` from Play2.2. 
 
@@ -545,7 +553,7 @@ Running The Sample Application
 Attention -- Distributed Servers
 ---------------------------------------
 
-[Ehcache](http://ehcache.org), the default cache implementation used by Play2.x, does not work on distributed application servers.
+[Ehcache](http://www.ehcache.org/), the default cache implementation used by Play2.x, does not work on distributed application servers.
 
 If you have distributed servers, use the [Memcached Plugin](https://github.com/mumoshu/play2-memcached) or something similar.
 
