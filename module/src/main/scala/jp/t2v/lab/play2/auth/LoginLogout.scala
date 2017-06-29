@@ -6,7 +6,7 @@ import play.api.libs.Crypto
 import scala.concurrent.{Future, ExecutionContext}
 
 trait Login {
-  self: Controller with AuthConfig =>
+  self: AbstractController with AuthConfig =>
 
   def markLoggedIn(userId: Id)(implicit request: RequestHeader, ctx: ExecutionContext): Result => Future[Result] = { result =>
     idContainer.startNewSession(userId, sessionTimeoutInSeconds).map(token => tokenAccessor.put(token)(result))
@@ -15,7 +15,7 @@ trait Login {
 }
 
 trait Logout {
-  self: Controller with AuthConfig =>
+  self: AbstractController with AuthConfig =>
 
   def markLoggedOut()(implicit request: RequestHeader, ctx: ExecutionContext): Result => Future[Result] = { result =>
     tokenAccessor.extract(request) foreach idContainer.remove
@@ -25,5 +25,5 @@ trait Logout {
 }
 
 trait LoginLogout extends Login with Logout {
-  self: Controller with AuthConfig =>
+  self: AbstractController with AuthConfig =>
 }
