@@ -1,8 +1,6 @@
+import bintray.BintrayPlugin.autoImport.{bintrayOrganization, bintrayRepository, bintrayOmitLicense}
+import sbt.Keys._
 import sbt._
-import Keys._
-import play.routes.compiler.InjectedRoutesGenerator
-import play.sbt.routes.RoutesKeys.routesGenerator
-import play.twirl.sbt.Import.TwirlKeys
 
 object ApplicationBuild extends Build {
 
@@ -11,14 +9,17 @@ object ApplicationBuild extends Build {
   val playVersion = play.core.PlayVersion.current
 
   lazy val baseSettings = Seq(
-    version            := "0.16.0-SNAPSHOT",
-    scalaVersion       := "2.11.11",
+    version            := "0.16.0",
+    scalaVersion       := "2.12.2",
     crossScalaVersions := Seq("2.11.11", "2.12.2"),
-    organization       := "jp.t2v",
+    organization       := "com.adendamedia",
     resolvers          ++=
       Resolver.typesafeRepo("releases") ::
       Resolver.sonatypeRepo("releases") ::
       Nil,
+    resolvers += "adenda-bintray" at "https://dl.bintray.com/adenda/stackable-controller",
+    resolvers += "sonatype releases" at "http://oss.sonatype.org/content/repositories/releases",
+    resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/",
     scalacOptions      ++= Seq("-language:_", "-deprecation")
   )
 
@@ -32,6 +33,8 @@ object ApplicationBuild extends Build {
     else
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
   }
+
+  /*
   lazy val appPomExtra = {
         <url>https://github.com/t2v/play2-auth</url>
         <licenses>
@@ -52,23 +55,27 @@ object ApplicationBuild extends Build {
             <url>https://github.com/gakuzzzz</url>
           </developer>
         </developers>
-  }
-
+  }*/
 
   lazy val core = Project("core", base = file("module"))
     .settings(
       baseSettings,
       libraryDependencies += "com.typesafe.play"  %%   "play"                   % playVersion        % "provided",
       libraryDependencies += "com.typesafe.play"  %%   "play-cache"             % playVersion        % "provided",
-      libraryDependencies += "jp.t2v"             %%   "stackable-controller"   % "0.7.0-SNAPSHOT",
+      libraryDependencies += "com.adendamedia"         %%   "stackable-controller"   % "0.7.0",
       name                    := appName,
       publishMavenStyle       := appPublishMavenStyle,
       publishArtifact in Test := appPublishArtifactInTest,
       pomIncludeRepository    := appPomIncludeRepository,
-      publishTo               <<=(version)(appPublishTo),
-      pomExtra                := appPomExtra
+      licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+      bintrayOrganization := Some("adenda"),
+      bintrayRepository := "play2-auth",
+      bintrayOmitLicense := true
+      //publishTo               <<=(version)(appPublishTo),
+      //pomExtra                := appPomExtra
     )
 
+  /*
   lazy val test = Project("test", base = file("test"))
     .settings(
       baseSettings,
@@ -165,5 +172,6 @@ object ApplicationBuild extends Build {
       publishTo         <<=(version)(appPublishTo),
       pomExtra          := appPomExtra
     ).aggregate(core, test, sample, social, socialSample)
+    */
 
 }
